@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "objects": {
+    "app:admin": {
+      "guid": "62a2658b57218b8d4e939a0fa78aefd9",
+      "canonical": "admin",
+      "canonical_source": "code"
+    },
+    "app:auth": {
+      "guid": "4fe67f5a2d319eaaca7996700f27edd8",
+      "canonical": "auth",
+      "canonical_source": "code"
+    },
+    "app:economy": {
+      "guid": "9e5544f7bf65d8fed1f4aecffd916444",
+      "canonical": "economy",
+      "canonical_source": "code"
+    },
+    "dbo:audit_log": {
+      "guid": "1b71dcef19b2eeb1855a87ace88ef1a0"
+    },
+    "dbo:auth": {
+      "guid": "a4f9d97a6ce89e5a597a1ba072621dee"
+    },
+    "dbo:economy_rules": {
+      "guid": "a6dc4585acad404bcf98fb7bbffae6f7"
+    },
+    "dbo:ledger_entries": {
+      "guid": "58953ca1beb5827f942432228693b75d"
+    },
+    "dbo:players": {
+      "guid": "28b6dc06e4a5a749949999ebdf052eb5"
+    },
+    "dbo:wallets": {
+      "guid": "17c12e11bbfc52bc14e73bdb0fa5e45d"
+    },
+    "query:admin|GET|audit": {
+      "guid": "afca5adeb4e0ff9e6c487669edcee5d9"
+    },
+    "query:auth|GET|me": {
+      "guid": "bfd70d24f92356209c72088852ec320e"
+    },
+    "query:auth|POST|login": {
+      "guid": "d39d74f907baeb484e9c93358362998a"
+    },
+    "query:economy|GET|balance": {
+      "guid": "68cbd9dd582c740ceb234f89f0287f21"
+    },
+    "query:economy|GET|ledger": {
+      "guid": "52e9a60e1ad812df1009c9b1b53b410b"
+    },
+    "query:economy|GET|players": {
+      "guid": "fb6c50030a731f96e682c759afb36f69"
+    },
+    "query:economy|GET|rules": {
+      "guid": "90f54ee85024cf76ec9032464d17b371"
+    },
+    "query:economy|POST|earn": {
+      "guid": "3c9f7e47ec6714496e0d595aa11f2b06"
+    },
+    "query:economy|POST|grant": {
+      "guid": "324cf7cfccc54c93c83d76e0fd2f4e87"
+    },
+    "query:economy|POST|refund": {
+      "guid": "e02de19c51882d00e6986fbcb64b8829"
+    },
+    "query:economy|POST|seed": {
+      "guid": "5dbfced9fdbf232fb54ee0057b404d7b"
+    },
+    "query:economy|POST|spend": {
+      "guid": "26e70785e9e32427686f3a761e96e636"
+    }
+  }
+}

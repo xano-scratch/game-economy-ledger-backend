@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Economy Ledger Backend, a Xano proof artifact</title>
+    <meta
+      name="description"
+      content="One governed rule layer for a game's virtual currency, over an append-only ledger, with API-layer RBAC. A Xano Backend Modernization proof, authored in TypeScript with @xanots/sdk."
+    />
+    <style>
+      :root {
+        --bg: #0a0a0b;
+        --panel: #141416;
+        --panel-2: #1b1b1e;
+        --border: rgba(255, 255, 255, 0.1);
+        --fg: #f5f5f6;
+        --muted: #a1a1aa;
+        --primary: #fafafa;
+        --emerald: #34d399;
+        --amber: #fbbf24;
+        --sky: #7dd3fc;
+        --radius: 12px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: radial-gradient(1200px 600px at 50% -10%, #16161a 0%, var(--bg) 55%);
+        color: var(--fg);
+        font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 56px 24px 80px; }
+      .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+      .badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        border: 1px solid var(--border); border-radius: 999px;
+        padding: 4px 12px; font-size: 13px; color: var(--muted);
+        background: var(--panel);
+      }
+      .badge.play { color: var(--sky); border-color: rgba(125, 211, 252, 0.35); }
+      h1 { font-size: 42px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 14px; }
+      .tagline { font-size: 19px; color: var(--muted); max-width: 42rem; margin: 0 0 18px; }
+      .meta { font-size: 14px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-bottom: 24px; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        border-radius: 10px; padding: 11px 20px; font-size: 15px; font-weight: 600;
+        text-decoration: none; cursor: pointer; transition: transform 0.05s ease, background 0.15s ease;
+      }
+      .btn:active { transform: translateY(1px); }
+      .btn.primary { background: var(--primary); color: #0a0a0b; }
+      .btn.primary:hover { background: #ffffff; }
+      .btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+      .btn.ghost:hover { background: var(--panel-2); }
+      .shot { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); display: block; margin: 8px 0 44px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+      h2 { font-size: 24px; letter-spacing: -0.01em; margin: 44px 0 14px; }
+      p { color: #d4d4d8; }
+      .grid { display: grid; gap: 14px; }
+      @media (min-width: 640px) { .grid.cols-3 { grid-template-columns: repeat(3, 1fr); } }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+      .card h3 { margin: 0 0 6px; font-size: 16px; }
+      .card p { margin: 0; font-size: 14px; color: var(--muted); }
+      ul.rules { list-style: none; padding: 0; margin: 0; }
+      ul.rules li { padding: 10px 0; border-bottom: 1px solid var(--border); color: #d4d4d8; }
+      ul.rules li:last-child { border-bottom: none; }
+      ul.rules b { color: var(--fg); }
+      table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+      th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+      td code { color: var(--emerald); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+      .verb { font-family: ui-monospace, monospace; color: var(--amber); font-size: 12px; }
+      pre {
+        background: #0e0e10; border: 1px solid var(--border); border-radius: 10px;
+        padding: 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.55; color: #e4e4e7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .note { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; color: var(--muted); font-size: 14px; }
+      footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+      a.inline { color: var(--sky); }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <div class="badges">
+        <span class="badge play">Play 2 · Backend Modernization</span>
+        <span class="badge">Vertical: gaming</span>
+        <span class="badge">Xano · XanoTS</span>
+      </div>
+
+      <h1>Game Economy Ledger Backend</h1>
+      <p class="tagline">
+        One governed rule layer for a game's virtual currency. Every earn, spend, grant, and refund posts
+        through versioned rules into an append-only ledger, with API-layer RBAC.
+      </p>
+      <div class="meta">6 tables · 12 endpoints · 3 API groups · authored in TypeScript with @xanots/sdk</div>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="https://github.com/xano-scratch/game-economy-ledger-backend">View on GitHub</a>
+        <a class="btn ghost" href="#use">Use this template</a>
+      </div>
+
+      <img class="shot" src="screenshot.png" alt="The player console: two wallets reconciled against their ledger, and a spend refused by the rule layer with a named reason" />
+
+      <h2>What it demonstrates</h2>
+      <p>
+        A studio usually accumulates economy logic in scattered places, where each mini game and store
+        screen enforces its own balance checks and its own caps. This pulls that logic into one readable API
+        layer a backend engineer can point at and trust.
+      </p>
+      <ul class="rules">
+        <li><b>Balance sufficiency.</b> A spend a wallet cannot cover is refused, unless the rules allow a negative balance.</li>
+        <li><b>Per-transaction limit.</b> A spend over the configured ceiling is refused.</li>
+        <li><b>Daily grant cap.</b> An operator grant past the rolling 24 hour cap is refused.</li>
+        <li><b>Duplicate guard.</b> Every write carries an idempotency key, so a retry cannot post twice.</li>
+        <li><b>Refund reversal.</b> A refund reverses one spend exactly once; a second refund of it is refused.</li>
+        <li><b>API-layer RBAC.</b> Grant, refund, and the audit log require an operator token. A player token gets 403, an anonymous request 401. This is API-layer access control, not row-level security.</li>
+      </ul>
+      <p>
+        The ledger is append-only, and each entry records the rule version that authorized it, so a past
+        decision stays explainable. The balance endpoint returns each wallet's cached balance next to a
+        balance summed from its entries, which proves the two always reconcile.
+      </p>
+
+      <h2>Three screens</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Player console</h3>
+          <p>Both wallets, cached balance next to the ledger-summed balance, with earn and spend and one-click refusal scenarios.</p>
+        </div>
+        <div class="card">
+          <h3>Ledger view</h3>
+          <p>The append-only entries, newest first, each with its kind, signed amount, balance after, and rule version.</p>
+        </div>
+        <div class="card">
+          <h3>Operator panel</h3>
+          <p>Sign in, grant, refund, and read the audit log. Watch a player token and an anonymous request get refused.</p>
+        </div>
+      </div>
+
+      <h2>API surface</h2>
+      <table>
+        <thead>
+          <tr><th>Verb</th><th>Path</th><th>What it enforces</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="verb">POST</td><td><code>api:economy/seed</code></td><td>Resets to a known demo state</td></tr>
+          <tr><td class="verb">POST</td><td><code>api:auth/login</code></td><td>Verifies credentials, mints a token, returns the role</td></tr>
+          <tr><td class="verb">GET</td><td><code>api:auth/me</code></td><td>The current user and role (token required)</td></tr>
+          <tr><td class="verb">GET</td><td><code>api:economy/balance</code></td><td>Cached balance next to the ledger-summed balance</td></tr>
+          <tr><td class="verb">GET</td><td><code>api:economy/ledger</code></td><td>A player's append-only entries, newest first</td></tr>
+          <tr><td class="verb">POST</td><td><code>api:economy/earn</code></td><td>Credits currency, with the duplicate guard</td></tr>
+          <tr><td class="verb">POST</td><td><code>api:economy/spend</code></td><td>Debits currency: balance, per-txn limit, idempotency</td></tr>
+          <tr><td class="verb">POST</td><td><code>api:economy/grant</code></td><td>Operator only; enforces the rolling daily grant cap</td></tr>
+          <tr><td class="verb">POST</td><td><code>api:economy/refund</code></td><td>Operator only; reverses a spend once, never twice</td></tr>
+          <tr><td class="verb">GET</td><td><code>api:admin/audit</code></td><td>Operator only; every allowed and rejected action</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="use">Use this template</h2>
+      <p>Clone it and get a live governed backend in a minute. You need Node 20 or newer and a Xano account.</p>
+      <pre>git clone https://github.com/xano-scratch/game-economy-ledger-backend
+cd game-economy-ledger-backend
+npm install
+npx xanots login
+npm run xano:deploy</pre>
+      <p>Or hand the whole thing to an AI builder with a prompt like this:</p>
+      <pre>Clone https://github.com/xano-scratch/game-economy-ledger-backend and run it:
+`npm install`, then `npx xanots login`, then `npm run xano:deploy`.
+It deploys a governed game-economy backend (append-only ledger, versioned
+rules, API-layer RBAC) plus a React frontend, and prints a live URL. Then
+help me add a new rule to economy_rules and enforce it in the spend endpoint.</pre>
+
+      <h2>Live preview</h2>
+      <div class="note">
+        The build ships with a live ephemeral environment, which is disposable and expires. The durable
+        artifact is this repo. Anyone can run <code>npm run xano:deploy</code> to get a fresh live URL in
+        under a minute.
+      </div>
+
+      <footer>
+        A Xano proof artifact, authored in TypeScript with @xanots/sdk. Access is enforced at the API layer
+        with role-based checks, not row-level security. This is an internal scratch demo, not a production
+        reference, and it carries no real credentials.
+      </footer>
+    </main>
+  </body>
+</html>
